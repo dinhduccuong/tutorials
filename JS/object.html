@@ -33,7 +33,7 @@
             }
         }
         console.log(personB)
-
+        //them thuoc tinh va ham
         personB.hometown = "Ha Noi"
         personA.school = "Bach Khoa Ha Noi"
 
@@ -57,31 +57,16 @@
 
         ////
         var personD = {
-            name: "D",
-            setName: function (v) {
-                this.name = v
+            _name: "D",
+            set name(v) {
+                this._name = v
             },
-            set setName2(v) {
-                this.name = v
-            },
-            getName: function () {
-                return this.name
-            },
-            get getName2() {
-                return this.name;
+            get name() {
+                return this._name;
             }
         }
-
+        personD.name = "AAA"
         console.log(personD.name)
-
-        personD.setName("D1")
-        console.log(personD.name)
-
-        personD.setName2 = "D2"
-        console.log(personD.name)
-
-        console.log(personD.getName())
-        console.log(personD.getName2)
 
     </script>
 </body>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+
+    <script crossorigin
+            src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin
+            src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        'use strict';
+        const e = React.createElement(
+            'h1',
+            { style: { color: 'red' }, onClick: () => alert(1) },
+            'Hello, world!'
+        );
+        const domContainer = document.querySelector('#root');
+        ReactDOM.render(<h1>A</h1>, domContainer);
+    </script>
+</body>
+
+</html>

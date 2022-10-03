@@ -21,8 +21,7 @@ public class UserManagementService {
 	public void setUserClaims(String uid, List<Permission> requestedPermissions) throws FirebaseAuthException {
 		List<String> permissions = requestedPermissions.stream().map(Enum::toString).collect(Collectors.toList());
 
-		Map<String, Object> claims = Map.of("custom_claims", permissions);
-
+		Map<String, Object> claims = Map.of("roles", permissions, "id", 1L);
 		firebaseAuth.setCustomUserClaims(uid, claims);
 	}
 }

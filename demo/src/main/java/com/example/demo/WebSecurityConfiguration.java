@@ -26,7 +26,7 @@ public class WebSecurityConfiguration {
 		JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
 
 		converter.setJwtGrantedAuthoritiesConverter(
-				jwt -> Optional.ofNullable(jwt.getClaimAsStringList("custom_claims")).stream()
+				jwt -> Optional.ofNullable(jwt.getClaimAsStringList("roles")).stream()
 						.flatMap(Collection::stream).map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
 		return converter;

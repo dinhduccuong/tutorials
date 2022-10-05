@@ -22,7 +22,7 @@ public class AdminController {
 
 	private final UserManagementService userManagementService;
 
-	@Secured("ROLE_ANONYMOUS")
+	@Secured("ROLE_READ")
 	@PostMapping(path = "/user-claims/{uid}")
 	public void setUserClaims(@PathVariable String uid, @RequestBody List<Permission> requestedClaims)
 			throws FirebaseAuthException {

@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -31,6 +30,9 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 	@Autowired
 	DataSource dataSource;
 
+	@Autowired
+	CacheManager cacheManager;
+
 	@Override
 	protected MethodSecurityExpressionHandler createExpressionHandler() {
 		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
@@ -41,7 +43,7 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 
 	@Bean
 	AclAuthorizationStrategy aclAuthorizationStrategy() {
-		return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_READ"));
 	}
 
 	@Bean
@@ -50,13 +52,8 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 	}
 
 	@Bean
-	CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager("aclCache");
-	}
-
-	@Bean
 	AclCache aclCache() {
-		return new SpringCacheBasedAclCache(cacheManager().getCache("aclCache"), permissionGrantingStrategy(),
+		return new SpringCacheBasedAclCache(cacheManager.getCache("aclCache"), permissionGrantingStrategy(),
 				aclAuthorizationStrategy());
 	}
 

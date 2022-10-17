@@ -39,16 +39,15 @@ public class UserManagementService {
 
 	public void setUserClaims(String uid, List<Permission> requestedPermissions) throws FirebaseAuthException {
 		List<String> permissions = requestedPermissions.stream().map(Enum::toString).collect(Collectors.toList());
-
-//		Map<String, Object> claims = Map.of("roles", permissions, "id", 1L);
-//		firebaseAuth.setCustomUserClaims(uid, claims);
-		setACL();
+		
+		Map<String, Object> claims = Map.of("roles", permissions, "id", 1L);
+		firebaseAuth.setCustomUserClaims(uid, claims);
+//		setACL();
 	}
 
 	@org.springframework.transaction.annotation.Transactional
 	public void setACL() {
 		ObjectIdentity oi = new ObjectIdentityImpl(Company.class,1L);
-
 		Sid sid = new PrincipalSid("test");
 		Sid sid2 = new GrantedAuthoritySid("ROLE_WRITE");
 

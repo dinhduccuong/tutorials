@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.acls.AclPermissionEvaluator;
 import org.springframework.security.acls.domain.AclAuthorizationStrategy;
 import org.springframework.security.acls.domain.AclAuthorizationStrategyImpl;
@@ -38,12 +40,24 @@ public class AclMethodSecurityConfiguration extends GlobalMethodSecurityConfigur
 		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
 		AclPermissionEvaluator permissionEvaluator = new AclPermissionEvaluator(aclService());
 		expressionHandler.setPermissionEvaluator(permissionEvaluator);
+		expressionHandler.setRoleHierarchy(roleHierarchy());
 		return expressionHandler;
+	}
+	
+	@Bean
+	RoleHierarchy roleHierarchy() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("ROLE_ADMIN > ROLE_MANAGER");
+		stringBuffer.append("\n ROLE_MANAGER > ROLE_EDITOR");
+		
+		roleHierarchy.setHierarchy(stringBuffer.toString());
+		return roleHierarchy;
 	}
 
 	@Bean
 	AclAuthorizationStrategy aclAuthorizationStrategy() {
-		return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_READ"));
+		return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 
 	@Bean

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 public enum Permission {
-    ROLE_READ,
-    ROLE_WRITE
+    ROLE_ADMIN,
+    ROLE_MANAGER,
+    ROLE_EDITOR
 }
